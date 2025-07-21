@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องคิดต้นทุนและกำไร</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Sarabun', sans-serif; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2 text-center">เครื่องคิดต้นทุนและกำไร</h1>
+            <p class="text-gray-600 text-center mb-8">คำนวณต้นทุนและกำไรสำหรับธุรกิจขนมอบ</p>
+            
+            <!-- Product Info -->
+            <div class="bg-blue-50 rounded-xl p-6 mb-8">
+                <h2 class="text-xl font-semibold text-blue-800 mb-4">ข้อมูลสินค้า</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">ราคาขาย/กระปุก (บาท)</label>
+                        <input type="number" id="sellPrice" value="20" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">จำนวนกระปุกต่อรอบอบ</label>
+                        <input type="number" id="jarCount" value="7" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">ชิ้นต่อกระปุก</label>
+                        <input type="number" id="piecesPerJar" value="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ingredients Cost -->
+            <div class="bg-green-50 rounded-xl p-6 mb-8">
+                <h2 class="text-xl font-semibold text-green-800 mb-4">ต้นทุนวัตถุดิบ</h2>
+                <div class="space-y-4">
+                    <!-- Sugar -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">น้ำตาล</label>
+                            <div class="text-sm text-gray-600">1 กก. = 45 บาท</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ใช้ (กรัม)</label>
+                            <input type="number" id="sugarUsed" value="215" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ต้นทุน (บาท)</label>
+                            <div id="sugarCost" class="px-3 py-2 bg-gray-100 rounded-lg font-medium">9.68</div>
+                        </div>
+                    </div>
+
+                    <!-- Flour -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">แป้ง</label>
+                            <div class="text-sm text-gray-600">1 กก. = 42 บาท</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ใช้ (กรัม)</label>
+                            <input type="number" id="flourUsed" value="120" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ต้นทุน (บาท)</label>
+                            <div id="flourCost" class="px-3 py-2 bg-gray-100 rounded-lg font-medium">5.04</div>
+                        </div>
+                    </div>
+
+                    <!-- Cocoa -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ผงโกโก้</label>
+                            <div class="text-sm text-gray-600">440 กรัม = 255 บาท</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ใช้ (กรัม)</label>
+                            <input type="number" id="cocoaUsed" value="32" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ต้นทุน (บาท)</label>
+                            <div id="cocoaCost" class="px-3 py-2 bg-gray-100 rounded-lg font-medium">18.55</div>
+                        </div>
+                    </div>
+
+                    <!-- Butter -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">เนยขาว</label>
+                            <div class="text-sm text-gray-600">1 กก. = 66 บาท</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ใช้ (กรัม)</label>
+                            <input type="number" id="butterUsed" value="16" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ต้นทุน (บาท)</label>
+                            <div id="butterCost" class="px-3 py-2 bg-gray-100 rounded-lg font-medium">1.06</div>
+                        </div>
+                    </div>
+
+                    <!-- Eggs -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ไข่เบอร์ 0</label>
+                            <div class="text-sm text-gray-600">ฟองละ 4 บาท</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ใช้ (ฟอง)</label>
+                            <input type="number" id="eggsUsed" value="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ต้นทุน (บาท)</label>
+                            <div id="eggsCost" class="px-3 py-2 bg-gray-100 rounded-lg font-medium">8.00</div>
+                        </div>
+                    </div>
+
+                    <!-- Oil -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">น้ำมันพืช</label>
+                            <div class="text-sm text-gray-600">1000 มล. = 50 บาท</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ใช้ (มล.)</label>
+                            <input type="number" id="oilUsed" value="160" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                            <div class="text-xs text-gray-500 mt-1">2/3 cup ≈ 160 มล.</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ต้นทุน (บาท)</label>
+                            <div id="oilCost" class="px-3 py-2 bg-gray-100 rounded-lg font-medium">8.00</div>
+                        </div>
+                    </div>
+
+                    <!-- Packaging -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end border-t pt-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">บรรจุภัณฑ์</label>
+                            <div class="text-sm text-gray-600">50 ชิ้น = 100 บาท</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ใช้ (ชิ้น)</label>
+                            <input type="number" id="packagingUsed" value="35" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                            <div class="text-xs text-gray-500 mt-1">7 กระปุก × 5 ชิ้น (1 รอบอบ)</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">ต้นทุน (บาท)</label>
+                            <div id="packagingCost" class="px-3 py-2 bg-gray-100 rounded-lg font-medium">70.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6">
+                <h2 class="text-xl font-semibold text-purple-800 mb-6">สรุปผลการคำนวณ</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-gray-700">ต้นทุนวัตถุดิบรวม:</span>
+                            <span id="totalIngredientCost" class="font-semibold text-lg">50.33 บาท</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-gray-700">ต้นทุนบรรจุภัณฑ์:</span>
+                            <span id="totalPackagingCost" class="font-semibold text-lg">70.00 บาท</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b-2 border-purple-300">
+                            <span class="text-purple-800 font-medium">ต้นทุนรวมทั้งหมด:</span>
+                            <span id="totalCost" class="font-bold text-xl text-purple-800">120.33 บาท</span>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-gray-700">รายได้รวม:</span>
+                            <span id="totalRevenue" class="font-semibold text-lg">140.00 บาท</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                            <span class="text-gray-700">กำไรสุทธิ:</span>
+                            <span id="netProfit" class="font-semibold text-lg text-green-600">19.67 บาท</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b-2 border-green-300">
+                            <span class="text-green-800 font-medium">อัตรากำไร:</span>
+                            <span id="profitMargin" class="font-bold text-xl text-green-800">14.05%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Per Unit Analysis -->
+                <div class="mt-6 pt-6 border-t border-purple-200">
+                    <h3 class="text-lg font-semibold text-purple-800 mb-4">วิเคราะห์ต่อหน่วย</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-blue-600" id="costPerJar">17.19</div>
+                            <div class="text-sm text-gray-600">ต้นทุน/กระปุก (บาท)</div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-green-600" id="profitPerJar">2.81</div>
+                            <div class="text-sm text-gray-600">กำไร/กระปุก (บาท)</div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 text-center">
+                            <div class="text-2xl font-bold text-purple-600" id="costPerPiece">3.44</div>
+                            <div class="text-sm text-gray-600">ต้นทุน/ชิ้น (บาท)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateCosts() {
+            // Get input values
+            const sellPrice = parseFloat(document.getElementById('sellPrice').value) || 0;
+            const jarCount = parseFloat(document.getElementById('jarCount').value) || 0;
+            const piecesPerJar = parseFloat(document.getElementById('piecesPerJar').value) || 0;
+            
+            // Ingredient usage
+            const sugarUsed = parseFloat(document.getElementById('sugarUsed').value) || 0;
+            const flourUsed = parseFloat(document.getElementById('flourUsed').value) || 0;
+            const cocoaUsed = parseFloat(document.getElementById('cocoaUsed').value) || 0;
+            const butterUsed = parseFloat(document.getElementById('butterUsed').value) || 0;
+            const eggsUsed = parseFloat(document.getElementById('eggsUsed').value) || 0;
+            const oilUsed = parseFloat(document.getElementById('oilUsed').value) || 0;
+            const packagingUsed = parseFloat(document.getElementById('packagingUsed').value) || 0;
+            
+            // Calculate individual costs
+            const sugarCost = (sugarUsed / 1000) * 45;
+            const flourCost = (flourUsed / 1000) * 42;
+            const cocoaCost = (cocoaUsed / 440) * 255;
+            const butterCost = (butterUsed / 1000) * 66;
+            const eggsCost = eggsUsed * 4;
+            const oilCost = (oilUsed / 1000) * 50;
+            const packagingCost = (packagingUsed / 50) * 100;
+            
+            // Update individual cost displays
+            document.getElementById('sugarCost').textContent = sugarCost.toFixed(2);
+            document.getElementById('flourCost').textContent = flourCost.toFixed(2);
+            document.getElementById('cocoaCost').textContent = cocoaCost.toFixed(2);
+            document.getElementById('butterCost').textContent = butterCost.toFixed(2);
+            document.getElementById('eggsCost').textContent = eggsCost.toFixed(2);
+            document.getElementById('oilCost').textContent = oilCost.toFixed(2);
+            document.getElementById('packagingCost').textContent = packagingCost.toFixed(2);
+            
+            // Calculate totals
+            const totalIngredientCost = sugarCost + flourCost + cocoaCost + butterCost + eggsCost + oilCost;
+            const totalCost = totalIngredientCost + packagingCost;
+            const totalRevenue = sellPrice * jarCount;
+            const netProfit = totalRevenue - totalCost;
+            const profitMargin = totalRevenue > 0 ? (netProfit / totalRevenue) * 100 : 0;
+            
+            // Per unit calculations
+            const costPerJar = jarCount > 0 ? totalCost / jarCount : 0;
+            const profitPerJar = jarCount > 0 ? netProfit / jarCount : 0;
+            const totalPieces = jarCount * piecesPerJar;
+            const costPerPiece = totalPieces > 0 ? totalCost / totalPieces : 0;
+            
+            // Update summary displays
+            document.getElementById('totalIngredientCost').textContent = totalIngredientCost.toFixed(2) + ' บาท';
+            document.getElementById('totalPackagingCost').textContent = packagingCost.toFixed(2) + ' บาท';
+            document.getElementById('totalCost').textContent = totalCost.toFixed(2) + ' บาท';
+            document.getElementById('totalRevenue').textContent = totalRevenue.toFixed(2) + ' บาท';
+            document.getElementById('netProfit').textContent = netProfit.toFixed(2) + ' บาท';
+            document.getElementById('profitMargin').textContent = profitMargin.toFixed(2) + '%';
+            
+            // Update per unit displays
+            document.getElementById('costPerJar').textContent = costPerJar.toFixed(2);
+            document.getElementById('profitPerJar').textContent = profitPerJar.toFixed(2);
+            document.getElementById('costPerPiece').textContent = costPerPiece.toFixed(2);
+            
+            // Update profit color based on positive/negative
+            const profitElement = document.getElementById('netProfit');
+            const profitMarginElement = document.getElementById('profitMargin');
+            const profitPerJarElement = document.getElementById('profitPerJar');
+            
+            if (netProfit >= 0) {
+                profitElement.className = 'font-semibold text-lg text-green-600';
+                profitMarginElement.className = 'font-bold text-xl text-green-800';
+                profitPerJarElement.className = 'text-2xl font-bold text-green-600';
+            } else {
+                profitElement.className = 'font-semibold text-lg text-red-600';
+                profitMarginElement.className = 'font-bold text-xl text-red-800';
+                profitPerJarElement.className = 'text-2xl font-bold text-red-600';
+            }
+        }
+        
+        // Add event listeners to all input fields
+        const inputs = document.querySelectorAll('input[type="number"]');
+        inputs.forEach(input => {
+            input.addEventListener('input', calculateCosts);
+        });
+        
+        // Calculate initial values
+        calculateCosts();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'962ae2d1365e7b41',t:'MTc1MzEwMjg3Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
